@@ -1,0 +1,127 @@
+<odoo>
+    <!-- Define the list view for estate.property -->
+    <record id="view_estate_property_list" model="ir.ui.view">
+        <field name="name">estate.property.list</field>
+        <field name="model">estate.property</field>
+        <field name="arch" type="xml">
+            <tree string="Estate Properties List">
+                <field name="name" string="Title"/>
+                <field name="postcode" string="Postcode"/>
+                <field name="bedrooms" string="Bedrooms"/>
+                <field name="living_area" string="Living Area (sqm)"/>
+                <field name="expected_price" string="Expected Price"/>
+                <field name="selling_price" string="Selling Price"/>
+                <field name="date_availability" string="Date Availability"/>
+            </tree>
+        </field>
+    </record>
+
+
+      <record id="view_estate_property_form" model="ir.ui.view">
+        <field name="name">estate.property.form</field>
+        <field name="model">estate.property</field>
+        <field name="arch" type="xml">
+            <form string="Create Estate Property">
+                <header>
+                     <button name="sold" string="Sold" type="object"/>
+                     <button name="cancel" string="Cancel" type="object"/>
+                </header>
+
+                 <group>
+                        <field name="name" class="oe_inline" size="100"/>
+                        <field name="tag_ids" widget="many2many_tags"/>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="state" readonly="1"/>
+                            <field name="property_type_id"/>
+                            <field name="postcode"/>
+
+                            <field name="date_availability"/>
+                        </group>
+                        <group>
+                           <field name="expected_price"/>
+                            <field name="best_offer"/>
+                            <field name="selling_price"/>
+                        </group>
+                        <notebook>
+                            <page string="Discription">
+                                <group>
+                                <field name="description"/>
+                            </group>
+                            <group>
+                                <field name="bedrooms"/>
+                                <field name="living_area"/>
+                                <field name="facades"/>
+                            </group>
+                            <group>
+                                <field name="garage"/>
+                                <field name="garden"/>
+                                <field name="garden_area"/>
+                                <field name="garden_orientation"/>
+                                <field name="total_area"/>
+                            </group>
+                            </page>
+
+                              <page name="other_info" string="Other Info">
+                            <group>
+                                <field name="salesperson_id"/>
+                            </group>
+                            <group>
+                                <field name="buyer_id"/>
+                            </group>
+                        </page>
+                            <page string="Offers">
+                                  <field name="offer_ids" widget="one2many_list" editable="top">
+                                 <tree>
+                                    <field name="price"/>
+                                    <field name="buyer_id"/>
+                                    <field name="validity"/>
+                                    <field name="date_deadline"/>
+                                    <button name="accept_offer" string="✓" type="object"/>
+                                    <button name="refuse_offer" string="✗" type="object"/>
+                                    <field name="status"/>
+                                </tree>
+                              </field>
+                            </page>
+                        </notebook>
+                    </group>
+
+            </form>
+        </field>
+    </record>
+
+     <record id="view_estate_property_search" model="ir.ui.view">
+        <field name="name">estate.property.search</field>
+        <field name="model">estate.property</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name" string="Title"/>
+                <field name="postcode" string="Postcode"/>
+                <field name="expected_price" string="Expected Price"/>
+                <field name="bedrooms" string="Bedrooms"/>
+                <field name="living_area" string="Living Area (sqm)"/>
+                <field name="facades" string="Facades"/>
+                <filter name="filter_available" string="Available" domain="[('date_availability', '&lt;=', context_today().strftime('%Y-%m-%d')), '|', ('selling_price', '=', 0.0), ('selling_price', '&gt;', 0.0)]"/>
+                <group expand="0" string="Group by Postcode">
+                    <filter string="All" name="all" domain="[]" help="Group by Postcode"/>
+                    <filter string="With Properties" name="with_properties" domain="[('postcode', '!=', False)]" help="Group by Postcode with Properties"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="estate_property_offer_acl" model="ir.model.access">
+        <field name="name">Estate Property Offer ACL</field>
+        <field name="model_id" ref="model_estate_property_offer"/>
+        <field name="group_id" ref="base.group_user"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_unlink" eval="True"/>
+    </record>
+
+
+
+
+</odoo>

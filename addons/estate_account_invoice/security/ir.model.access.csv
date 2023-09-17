@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_estate_property_invoice_user,Estate Property Invoice User,model_estate_property_invoice,base.group_user,1,0,0,0
+access_estate_property_invoice_manager,Estate Property Invoice Manager,model_estate_property_invoice,base.group_erp_manager,1,1,1,0

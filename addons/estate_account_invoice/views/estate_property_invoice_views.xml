@@ -1,0 +1,27 @@
+<odoo>
+    <data>
+
+        <record id="view_estate_property_invoice_tree" model="ir.ui.view">
+            <field name="name">estate.property.invoice.tree</field>
+            <field name="model">estate.property.invoice</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="date"/>
+                    <field name="buyer_id"/>
+                    <field name="property_id"/>
+                    <field name="amount"/>
+                </tree>
+            </field>
+        </record>
+
+
+        <record id="action_estate_property_invoice" model="ir.actions.act_window">
+            <field name="name">Property Invoices</field>
+            <field name="res_model">estate.property.invoice</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+
+        <menuitem id="menu_estate_property_invoice" name="Property Invoices" action="action_estate_property_invoice"/>
+    </data>
+</odoo>
